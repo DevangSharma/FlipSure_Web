@@ -11,19 +11,12 @@ import {
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CustomTable from "./tables";
-// import useEth from "../../contexts/EthContext/useEth";
 
 const theme = createTheme();
 
 const VerifyProduct = () => {
 
   const [product, setProduct] = useState(null);
-
-  const findManufacturer = async (s = "") => {
-    const manufacturerName = await getDoc(doc(db, "manufacturers", s));
-    if (!manufacturerName.data()) return "";
-    return manufacturerName.data().name;
-  };
 
 
   const handleSubmit = async (e) => {
@@ -33,7 +26,6 @@ const VerifyProduct = () => {
     const res = await getDoc(doc(db, "products", inputTokenId));
     const payload = res.data();
 
-    payload.manufacturer = await findManufacturer(res.data().manufacturer);
 
     if (!res.data()) {
       alert("Token not exist!");
