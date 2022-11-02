@@ -1,5 +1,4 @@
-import './App.css';
-import VerifyProduct from './verifyProduct';
+import VerifyProduct from "./Pages/verifyProduct";
 
 function App() {
   return (

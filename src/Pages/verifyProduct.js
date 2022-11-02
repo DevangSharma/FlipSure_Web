@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { db } from "./firebase";
+import { db } from "../Utils/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import {
   Button,
@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import CustomTable from "./tables";
+import CustomTable from "../Common/tables";
 
 const theme = createTheme();
 
