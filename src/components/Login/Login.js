@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { db } from "../Utils/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import React from "react";
+import { auth } from "../../firebase.config";
 import {
   Button,
   CssBaseline,
@@ -10,29 +9,25 @@ import {
   Typography,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import CustomTable from "../Common/tables";
-
+import { signInWithEmailAndPassword } from "firebase/auth";
 const theme = createTheme();
 
-const VerifyProduct = () => {
-
-  const [product, setProduct] = useState(null);
-
-
-  const handleSubmit = async (e) => {
+const Login = () => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    const inputTokenId = data.get("token-id");
-    const res = await getDoc(doc(db, "products", inputTokenId));
-    const payload = res.data();
-
-
-    if (!res.data()) {
-      alert("Token not exist!");
-      return;
-    }
-
-    setProduct(payload);
+    const payload = {
+      email: data.get("email"),
+      password: data.get("password"),
+    };
+    signInWithEmailAndPassword(auth, payload.email, payload.password)
+      .then(() => {
+        alert("Welcome to FlipSure");
+        window.location.replace("/");
+      })
+      .catch(() => {
+        alert("Invalid Credentials");
+      });
   };
   return (
     <ThemeProvider theme={theme}>
@@ -47,7 +42,7 @@ const VerifyProduct = () => {
           }}
         >
           <Typography component="h1" variant="h5">
-            Product Verification
+            Login
           </Typography>
           <Box
             component="form"
@@ -59,9 +54,18 @@ const VerifyProduct = () => {
               margin="normal"
               required
               fullWidth
-              id="token-id"
-              label="Token Id"
-              name="token-id"
+              id="email"
+              label="Email"
+              name="email"
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              type="password"
+              id="password"
+              label="Password"
+              name="password"
             />
             <Button
               type="submit"
@@ -69,14 +73,13 @@ const VerifyProduct = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Verify{" "}
+              Login{" "}
             </Button>
           </Box>
         </Box>
       </Container>
-      {product && <CustomTable product={product} />}
     </ThemeProvider>
   );
 };
 
-export default VerifyProduct;
+export default Login;
