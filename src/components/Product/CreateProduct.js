@@ -1,6 +1,12 @@
 import React from "react";
-import { db } from "../../firebase.config";
-import { addDoc, doc } from "firebase/firestore";
+import { auth, db } from "../../firebase.config";
+import {
+  addDoc,
+  collection,
+  doc,
+  getCountFromServer,
+  setDoc,
+} from "firebase/firestore";
 import {
   Button,
   CssBaseline,
@@ -10,13 +16,24 @@ import {
   Typography,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Navbar from "../Navbar";
 
 const theme = createTheme();
 
 const CreateProduct = () => {
+  const user = auth.currentUser;
+
+  if (!user) {
+    alert("Please Login First");
+    return;
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
+    const coll = collection(db, "products");
+    const snapshot = await getCountFromServer(coll);
+    const id = snapshot.data().count;
 
     const payload = {
       productId: data.get("product-id"),
@@ -25,18 +42,19 @@ const CreateProduct = () => {
       productPrice: data.get("product-price"),
       productWarranty: data.get("product-warranty"),
       purchasedOn: null,
-      manufacturer: "Authorised Msanufacturer",
+      manufacturer: user.email,
       expiresOn: null,
       available: true,
     };
 
-    await addDoc(doc(db, "products"), payload);
-    alert("Product Created!");
+    await setDoc(doc(db, "products", id.toString()), payload);
+    alert(`Product Created! at id: ${id}`);
 
     window.location.replace("/");
   };
   return (
     <ThemeProvider theme={theme}>
+      <Navbar />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
