@@ -10,7 +10,11 @@ import {
   Typography,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 const auth = getAuth();
 
@@ -28,15 +32,24 @@ const Signup = () => {
       password: data.get("password"),
     };
     createUserWithEmailAndPassword(auth, payload.email, payload.password)
-      .then(() => {
+      .then(async () => {
+        await setDoc(doc(db, "users", payload.email), payload);
+
+        signInWithEmailAndPassword(auth, payload.email, payload.password)
+          .then(() => {
+            alert("Welcome to FlipSure");
+            window.location.replace("/");
+          })
+          .catch((err) => {
+            alert(err);
+          });
+
         alert("Signed Up!");
       })
       .catch((err) => {
         console.log(err);
-        alert("Email already in use!");
+        alert(err);
       });
-    await setDoc(doc(db, "users", payload.email), payload);
-    window.location.replace("/");
   };
   return (
     <ThemeProvider theme={theme}>

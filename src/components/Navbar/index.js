@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,9 +14,15 @@ import { signOut } from "firebase/auth";
 
 const pages = [{ pageName: "Create Product", to: "/create" }];
 const Navbar = () => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    setUser(auth.currentUser);
+  }, [auth.currentUser]);
+
   const handleUserAuth = (event, isSignup = 0) => {
-    if (isSignup) window.location.replace("/signup");
-    else window.location.replace("/login");
+    if (isSignup) window.location.assign("/signup");
+    else window.location.assign("/login");
   };
 
   const handleLogout = () => {
@@ -27,8 +33,6 @@ const Navbar = () => {
       })
       .catch(() => alert("Something went wrong!"));
   };
-
-  const user = auth.currentUser;
 
   return (
     <AppBar sx={{ marginTop: 0 }} position="static">
