@@ -35,8 +35,6 @@ const VerifyProduct = () => {
     const res = await getDoc(doc(db, "products", inputTokenId));
     const payload = res.data();
 
-    payload.manufacturer = await findManufacturer(res.data().manufacturer);
-
     if (!res.data()) {
       alert("Token not exist!");
       return;
@@ -46,6 +44,7 @@ const VerifyProduct = () => {
       return;
     }
 
+    payload.manufacturer = await findManufacturer(res.data().manufacturer);
     setProduct(payload);
   };
   return (
