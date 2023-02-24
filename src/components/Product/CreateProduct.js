@@ -25,6 +25,7 @@ const CreateProduct = () => {
 
   if (!user) {
     alert("Please Login First");
+    window.location.assign("/");
     return;
   }
 

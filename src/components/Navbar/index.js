@@ -29,7 +29,7 @@ const Navbar = () => {
     signOut(auth)
       .then(() => {
         alert("You are logged out!");
-        window.location.reload();
+        window.location.assign("/");
       })
       .catch(() => alert("Something went wrong!"));
   };
@@ -76,6 +76,23 @@ const Navbar = () => {
             ))}
           </Box>
 
+          {user && (
+            <Box sx={{ flexGrow: 0, marginLeft: 4 }}>
+              <IconButton sx={{ p: 0, color: "white", fontSize: 16 }}>
+                {user.email}
+              </IconButton>
+            </Box>
+          )}
+          {user && (
+            <Box sx={{ flexGrow: 0, marginLeft: 4 }}>
+              <IconButton
+                onClick={handleLogout}
+                sx={{ p: 0, color: "white", fontSize: 16 }}
+              >
+                Logout
+              </IconButton>
+            </Box>
+          )}
           {!user && (
             <Box sx={{ flexGrow: 0 }}>
               <IconButton
@@ -93,23 +110,6 @@ const Navbar = () => {
                 sx={{ p: 0, color: "white", fontSize: 16 }}
               >
                 Signup
-              </IconButton>
-            </Box>
-          )}
-          {user && (
-            <Box sx={{ flexGrow: 0, marginLeft: 4 }}>
-              <IconButton sx={{ p: 0, color: "white", fontSize: 16 }}>
-                {user.email}
-              </IconButton>
-            </Box>
-          )}
-          {user && (
-            <Box sx={{ flexGrow: 0, marginLeft: 4 }}>
-              <IconButton
-                onClick={handleLogout}
-                sx={{ p: 0, color: "white", fontSize: 16 }}
-              >
-                Logout
               </IconButton>
             </Box>
           )}

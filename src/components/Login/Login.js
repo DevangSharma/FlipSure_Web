@@ -25,8 +25,8 @@ const Login = () => {
         alert("Welcome to FlipSure");
         window.location.replace("/");
       })
-      .catch(() => {
-        alert("Invalid Credentials");
+      .catch((err) => {
+        alert(err);
       });
   };
   return (
