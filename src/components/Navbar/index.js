@@ -12,7 +12,11 @@ import { Link } from "react-router-dom";
 import { auth } from "../../firebase.config";
 import { signOut } from "firebase/auth";
 
-const pages = [{ pageName: "Create Product", to: "/create" }];
+const pages = [
+  { pageName: "Create Product", to: "/create" },
+  { pageName: "Verify Products", to: "/verify" },
+  { pageName: "Sell", to: "/sell" },
+];
 const Navbar = () => {
   const [user, setUser] = useState(null);
 
