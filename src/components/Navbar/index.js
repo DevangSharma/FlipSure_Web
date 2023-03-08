@@ -22,7 +22,7 @@ const Navbar = () => {
 
   useEffect(() => {
     setUser(auth.currentUser);
-  }, [auth.currentUser]);
+  }, []);
 
   const handleUserAuth = (event, isSignup = 0) => {
     if (isSignup) window.location.assign("/signup");

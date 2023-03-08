@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { auth, db } from "../../firebase.config";
+import { db } from "../../firebase.config";
 import { doc, getDoc } from "firebase/firestore";
 import {
   Button,
@@ -18,7 +18,7 @@ const theme = createTheme();
 const VerifyProduct = () => {
   useEffect(() => {
     console.log("logged in");
-  }, [auth.currentUser]);
+  }, []);
 
   const [product, setProduct] = useState(null);
 
