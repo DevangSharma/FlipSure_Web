@@ -33,11 +33,11 @@ const AllProducts = () => {
 
   const purchaseProducts = async (id) => {
     const user = auth.currentUser;
-    const email = user.email;
-    if (!email) {
+    if (!user) {
       alert("Please login first!");
       return;
     }
+    const email = user.email;
     const userData = await getDoc(doc(db, "users", email));
     const product = await getDoc(doc(db, "products", id));
 
@@ -50,7 +50,6 @@ const AllProducts = () => {
       ...userData.data(),
     });
     alert("Congrats,Product Purchased!!");
-
     const purchaseMessage = `Hello ${
       userData.data().username
     }, \n This message is to confirm your purchase of ${
@@ -77,7 +76,10 @@ const AllProducts = () => {
         }&To=+91${userData.data().phone}`,
       }
     )
-      .then(() => console.log("success"))
+      .then(() => {
+        console.log("success");
+        window.location.reload();
+      })
       .catch((err) => console.log(err));
   };
 
@@ -98,7 +100,7 @@ const AllProducts = () => {
           }}
         >
           <Typography component="h1" variant="h5">
-            Shop Now{" "}
+            Shop Now
           </Typography>
         </Box>
         <Grid container spacing={2}>

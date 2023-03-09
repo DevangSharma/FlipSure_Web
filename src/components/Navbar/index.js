@@ -20,9 +20,15 @@ const pages = [
 const Navbar = () => {
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    setUser(auth.currentUser);
-  }, []);
+  auth.onAuthStateChanged(function (user) {
+    if (user) {
+      console.log("signed in");
+      setUser(user);
+    } else {
+      console.log("signed out");
+      setUser(null);
+    }
+  });
 
   const handleUserAuth = (event, isSignup = 0) => {
     if (isSignup) window.location.assign("/signup");

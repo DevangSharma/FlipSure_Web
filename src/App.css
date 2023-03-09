@@ -142,8 +142,9 @@ hr {
   margin: 2rem 1rem 0 0;
 }
  */
- #App {
-  margin: 0 0;
+ body {
+  margin: 0;
+  padding: 0;
 }
 
 .MuiCard-root{

@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { getAuth } from "firebase/auth";
+import Navbar from "../Navbar";
 
 const auth = getAuth();
 const theme = createTheme();
@@ -48,6 +49,8 @@ const Sell = () => {
   };
   return (
     <ThemeProvider theme={theme}>
+      <Navbar />
+
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
