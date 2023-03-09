@@ -55,7 +55,7 @@ const AllProducts = () => {
     }, \n This message is to confirm your purchase of ${
       product.data().productName
     }. \n Your unique token for your purchase is : ${product.id}. \n 
-    You can verify your product details on http://localhost:3000/verify. \n
+    You can verify your product details on https://flipsureweb.netlify.app//verify. \n
     
     Thank You on shopping with flipkart`;
 
