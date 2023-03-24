@@ -10,10 +10,10 @@ import {
   Typography,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { getAuth } from "firebase/auth";
+// import { getAuth } from "firebase/auth";
 import Navbar from "../Navbar";
 
-const auth = getAuth();
+// const auth = getAuth();
 const theme = createTheme();
 
 const Sell = () => {
