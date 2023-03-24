@@ -27,13 +27,13 @@ const Sell = () => {
       phone: data.get("phone"),
       email: data.get("email"),
     };
-    const user = auth.currentUser;
+    // const user = auth.currentUser;
     const currentProduct = await getDoc(doc(db, "products", payload.token));
-    if (
-      !currentProduct.data().email ||
-      currentProduct.data().email !== user.email
-    ) {
-      alert("Unable to verify the ownership of product");
+
+    console.log(currentProduct.data());
+
+    if (!currentProduct.data()) {
+      alert("Invalid Token ID");
       return;
     }
 
@@ -42,10 +42,41 @@ const Sell = () => {
       username: payload.username,
       phone: payload.phone,
       email: payload.email,
+      available: false,
     });
 
     alert("Product Sold successfully");
-    window.location.replace("/");
+    const purchaseMessage = `Hello ${
+      payload.username
+    }, \n This message is to confirm your purchase of ${
+      currentProduct.data().productName
+    }. \n Your unique token for your purchase is : ${currentProduct.id}. \n 
+    You can verify your product details on https://flipsureweb.netlify.app//verify. \n
+    
+    Thank You on shopping with flipkart`;
+
+    fetch(
+      `https://api.twilio.com/2010-04-01/Accounts/${process.env.REACT_APP_TWILIO_ACCOUNT_SID}/Messages.json`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization:
+            "Basic " +
+            btoa(
+              `${process.env.REACT_APP_TWILIO_ACCOUNT_SID}:${process.env.REACT_APP_TWILIO_AUTH_TOKEN}`
+            ),
+        },
+        body: `Body=${purchaseMessage}&From=${process.env.REACT_APP_TWILIO_PHONE}&To=+91${payload.phone}`,
+      }
+    )
+      .then(() => {
+        console.log("success");
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
+
+    // window.location.replace("/");
   };
   return (
     <ThemeProvider theme={theme}>

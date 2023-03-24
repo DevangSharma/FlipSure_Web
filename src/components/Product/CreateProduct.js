@@ -1,6 +1,7 @@
 import React from "react";
 import { auth, db } from "../../firebase.config";
 import {
+  addDoc,
   collection,
   doc,
   getCountFromServer,
@@ -49,6 +50,8 @@ const CreateProduct = () => {
 
     await setDoc(doc(db, "products", id.toString()), payload);
     alert(`Product Created! at id: ${id}`);
+
+    //Product Number error
 
     window.location.replace("/");
   };
