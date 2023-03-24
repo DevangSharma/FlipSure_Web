@@ -46,6 +46,7 @@ const Sell = () => {
     });
 
     alert("Product Sold successfully");
+
     const purchaseMessage = `Hello ${
       payload.username
     }, \n This message is to confirm your purchase of ${
@@ -76,7 +77,7 @@ const Sell = () => {
       })
       .catch((err) => console.log(err));
 
-    // window.location.replace("/");
+    window.location.replace("/");
   };
   return (
     <ThemeProvider theme={theme}>
