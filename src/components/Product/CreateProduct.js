@@ -33,7 +33,7 @@ const CreateProduct = () => {
     const data = new FormData(e.currentTarget);
     const coll = collection(db, "products");
     const snapshot = await getCountFromServer(coll);
-    const id = snapshot.data().count;
+    const id = snapshot.data().count + 1;
 
     const payload = {
       productId: data.get("product-id"),
